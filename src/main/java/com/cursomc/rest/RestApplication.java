@@ -8,8 +8,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.cursomc.rest.domain.Categoria;
+import com.cursomc.rest.domain.Cidade;
+import com.cursomc.rest.domain.Estado;
 import com.cursomc.rest.domain.Produto;
 import com.cursomc.rest.repositories.CategoriaRepository;
+import com.cursomc.rest.repositories.CidadeRepository;
+import com.cursomc.rest.repositories.EstadoRepository;
 import com.cursomc.rest.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -19,6 +23,10 @@ public class RestApplication implements CommandLineRunner {
 	public CategoriaRepository categoriaRepository;
 	@Autowired
 	public ProdutoRepository produtoRepository;
+	@Autowired
+	public EstadoRepository estadoRepository;
+	@Autowired
+	public CidadeRepository cidadeRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(RestApplication.class, args);
@@ -43,6 +51,19 @@ public class RestApplication implements CommandLineRunner {
 		
 		categoriaRepository.saveAll(Arrays.asList(c1,c2));
 		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
+		
+		Estado e1 = new Estado(null,"Minas Gerais");
+		Estado e2 = new Estado(null,"São Paulo");
+		
+		Cidade ci1 = new Cidade(null,"Uberlandia",e1);
+		Cidade ci2 = new Cidade(null,"São Paulo",e2);
+		
+		e1.getCidades().add(ci1);
+		e2.getCidades().add(ci2);
+		
+		estadoRepository.saveAll(Arrays.asList(e1,e2));
+		cidadeRepository.saveAll(Arrays.asList(ci1,ci2));
+		
 	}
 
 	
